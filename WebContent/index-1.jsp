@@ -92,6 +92,12 @@ ArrayList<String[]> list = connDb.index_1(); //获得test表中所有数据并�
 							各省份的总成交量对比
 						</a>
 					</li>
+					<li>
+						<a href="./index-5.jsp">
+							<i></i>
+							回头客预测分数对比
+						</a>
+					</li>
 				</ul>
 				<hr />
 				<br />

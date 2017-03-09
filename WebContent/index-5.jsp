@@ -1,7 +1,7 @@
 <%@ page language="java" import="dbtaobao.connDb,java.util.*" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%  
-ArrayList<String[]> list = connDb.index_4();
+ArrayList<String[]> list = connDb.index_5(); 
 %> 
 <!DOCTYPE html>
 <html lang="en">
@@ -85,13 +85,13 @@ ArrayList<String[]> list = connDb.index_4();
 						</a>
 					</li>
 
-					<li class="active">
+					<li>
 						<a href="./index-4.jsp">
 							<i></i>
 							各省份的销量对比
 						</a>
 					</li>
-					<li>
+					<li class='active'>
 						<a href="./index-5.jsp">
 							<i></i>
 							回头客预测分数对比
@@ -105,7 +105,7 @@ ArrayList<String[]> list = connDb.index_4();
 
 				<h1 class="page-title">
 					<i class="icon-signal"></i>
-					各省份的销量对比
+					回头客预测分数对比
 				</h1>
 				
 					
@@ -114,7 +114,7 @@ ArrayList<String[]> list = connDb.index_4();
 				<div class="widget">
 
 					<div class="widget-header">
-						<h3>地图</h3>
+						<h3>柱状图</h3>
 					</div> <!-- /widget-header -->
 
 					<div class="widget-content">
@@ -137,73 +137,33 @@ ArrayList<String[]> list = connDb.index_4();
 <script src="./js/jquery-1.7.2.min.js"></script>
 <script src="./js/bootstrap.js"></script>
 <script src="./js/echarts.min.js"></script>
-<script src="./js/china.js"></script>
 <script>
+//基于准备好的dom，初始化echarts实例
 var myChart = echarts.init(document.getElementById('main'));
-var data = [];
-<%
-for(int i = 0;i != list.size();i++){
-%>
-	data[<%=i%>] = {name:'<%=list.get(i)[0]%>',value:<%=list.get(i)[1]%>};
-<%}%>
-function randomData() {
-    return Math.round(Math.random()*1000);
-}
 
-option = {
+// 指定图表的配置项和数据
+var option = {
     title: {
-        text: '各省份销量',
-        subtext: '',
-        left: 'center'
+        text: '回头客预测分数对比'
     },
-    tooltip: {
-        trigger: 'item'
-    },
+    tooltip: {},
     legend: {
-        orient: 'vertical',
-        left: 'left',
-        data:['销量',]
+        data:['个数']
     },
-    visualMap: {
-        min: 0,
-        max: 2500,
-        left: 'left',
-        top: 'bottom',
-        text: ['高','低'],           // 文本，默认为数值文本
-        calculable: true
+    xAxis: {
+        data: ["分数>-30000",'分数<=-30000']
     },
-    toolbox: {
-        show: true,
-        orient: 'vertical',
-        left: 'right',
-        top: 'center',
-        feature: {
-            dataView: {readOnly: false},
-            restore: {},
-            saveAsImage: {}
-        }
-    },
-    series: [
-        {
-            name: '销量',
-            type: 'map',
-            mapType: 'china',
-            roam: false,
-            label: {
-                normal: {
-                    show: true
-                },
-                emphasis: {
-                    show: true
-                }
-            },
-            data:data
-        }
-    ]
+    yAxis: {},
+    series: [{
+        name: '个数',
+        type: 'bar',
+        data: [<%=list.get(0)[0]%>,10000-parseInt(<%=list.get(0)[0]%>)]
+    }]
 };
- // 使用刚指定的配置项和数据显示图表。
-myChart.setOption(option);
+
+// 使用刚指定的配置项和数据显示图表。
+myChart.setOption(option); 
+
 </script>
   </body>
 </html>
-

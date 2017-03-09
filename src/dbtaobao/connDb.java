@@ -100,5 +100,18 @@ public class connDb {
 		}
 		endConn();
 		return list;
-	}	
+	}
+	//回头客预测获取分数大于-30000的个数,总数量是10000
+	public static ArrayList index_5() throws SQLException{
+		ArrayList<String[]> list = new ArrayList();
+		startConn();
+		stmt = con.createStatement();
+		rs = stmt.executeQuery("select count(*) num from rebuy where score > -30000");
+		while(rs.next()){
+			String[] temp={rs.getString("num")};
+			list.add(temp);
+		}
+		endConn();
+		return list;
+	}
 }
